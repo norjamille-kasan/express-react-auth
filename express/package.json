@@ -7,22 +7,33 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npx tsc",
         "start": "node dist/server.js",
-        "dev": "nodemon src/server.ts"
+        "dev": "nodemon src/server.ts",
+        "db:gen": "drizzle-kit generate:mysql --config=./src/config/drizzle.ts",
+        "db:push": "drizzle-kit push:mysql --config=./src/config/drizzle.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "bcrypt": "^5.1.1",
+        "body-parser": "^1.20.2",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "drizzle-orm": "^0.29.4",
         "express": "^4.18.3",
-        "jsonwebtoken": "^9.0.2"
+        "jsonwebtoken": "^9.0.2",
+        "mysql2": "^3.9.2",
+        "uuid": "^9.0.1"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
         "@types/cookie-parser": "^1.4.7",
         "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
         "@types/jsonwebtoken": "^9.0.6",
+        "@types/uuid": "^9.0.8",
+        "drizzle-kit": "^0.20.14",
         "nodemon": "^3.1.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3"

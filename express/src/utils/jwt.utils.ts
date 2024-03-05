@@ -1,14 +1,22 @@
 import { sign } from "jsonwebtoken";
+import auth_config from "../config/auth";
+import { Response } from "express";
 
-export const ACCESS_TOKEN_KEY =
-    process.env.ACCESS_TOKEN_KEY || "access-token-key";
-export const SECRET_TOKEN_KEY =
-    process.env.SECRET_TOKEN_KEY || "secret-token-key";
-
-export function generateAccessToken(u: { id: number; email: string }) {
-    return sign(u, ACCESS_TOKEN_KEY, { expiresIn: "15m" });
+export function generateAccessToken(u: { id: number; jwtVersion: string }) {
+    return sign(u, auth_config.access_token_key, {
+        expiresIn: auth_config.atk_exp,
+    });
 }
 
-export function generateRefreshToken(u: { id: number; email: string }) {
-    return sign(u, SECRET_TOKEN_KEY, { expiresIn: "7d" });
+export function generateRefreshToken(u: { id: number; jwtVersion: string }) {
+    return sign(u, auth_config.refresh_token_key, {
+        expiresIn: auth_config.rtk_exp,
+    });
+}
+
+export function sendRefreshToken(res: Response, token: string) {
+    res.cookie(auth_config.cookie_name, token, {
+        httpOnly: true,
+        path: "/auth/refresh-token",
+    });
 }
